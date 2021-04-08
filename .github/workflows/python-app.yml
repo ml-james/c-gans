@@ -26,7 +26,7 @@ jobs:
         pip install pipenv
         if [ -f Pipfile.lock ]; then pipenv install --ignore-pipfile; fi
         pipenv install pytest --dev
-        pipenv install flake8
+        pipenv install flake8 --dev
     - name: Lint with flake8
       run: |
         pipenv run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics

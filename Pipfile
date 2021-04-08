@@ -5,12 +5,10 @@ name = "pypi"
 
 [packages]
 numpy = "*"
-flake8 = "*"
 keras = "*"
 matplotlib = "*"
 tensorflow = "*"
 opencv-python = "*"
-black = "*"
 
 [dev-packages]
 
