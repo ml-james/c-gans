@@ -8,7 +8,8 @@ from keras import backend as K
 import cv2
 from functools import partial
 from keras.models import Model
-from keras.layers.merge import _Merge
+# deprecated in keras 2 higher
+#from keras.layers.merge import _Merge
 from keras.layers import Input,Conv2DTranspose,BatchNormalization,LeakyReLU,Dense,UpSampling2D,Conv2D,concatenate,Flatten,Reshape
 from keras.preprocessing import image as image_
 from keras.utils.np_utils import to_categorical

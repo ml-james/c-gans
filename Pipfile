@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 numpy = "*"
 flake8 = "*"
+keras = "*"
+matplotlib = "*"
+tensorflow = "*"
+opencv-python = "*"
 
 [dev-packages]
 

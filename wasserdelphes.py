@@ -9,7 +9,8 @@ from keras import backend as K
 import h5py
 from functools import partial
 from keras.models import Model
-from keras.layers.merge import _Merge
+# deprecated in keras 2 higher
+#from keras.layers.merge import _Merge
 from keras.layers import Input,Dense,concatenate, LeakyReLU
 
 # Global Variables
