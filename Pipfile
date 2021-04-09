@@ -7,8 +7,8 @@ name = "pypi"
 numpy = "*"
 keras = "*"
 matplotlib = "*"
-tensorflow = "*"
 opencv-python = "*"
+tensorflow = "==2.2"
 
 [dev-packages]
 
