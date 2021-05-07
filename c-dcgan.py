@@ -1,6 +1,5 @@
-## vanilla cGAN used for the preliminary study on the MNIST dataset
-
 import os
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import keras
@@ -19,10 +18,8 @@ from keras.layers import (
 from keras.preprocessing import image
 from keras.utils.np_utils import to_categorical
 
-# Generator
 
-
-class Generator(object):
+class Generator:
     def __init__(self, latent_dim, condition_dim, RGB):
 
         generator_input_1 = Input(shape=(latent_dim,), name="g_1")
@@ -50,10 +47,7 @@ class Generator(object):
         return self.generator
 
 
-# Discriminator
-
-
-class Discriminator(object):
+class Discriminator:
     def __init__(self, height, width, RGB, condition_dim):
 
         discriminator_input_1 = Input(
@@ -93,10 +87,7 @@ class Discriminator(object):
         return self.discriminator
 
 
-# Generator
-
-
-class ConditionalDCGAN(object):
+class ConditionalDCGAN:
     def __init__(self, latent_dim, height, width, RGB, condition_dim):
 
         self._latent_dim = latent_dim
@@ -106,28 +97,20 @@ class ConditionalDCGAN(object):
         d = Discriminator(height, width, RGB, condition_dim)
         self._discriminator = d.get_model()
 
-        # Compile discriminator
-
         discriminator_optimizer = keras.optimizers.Adam(lr=0.0008, decay=1e-8)
         self._discriminator.compile(
             optimizer=discriminator_optimizer, loss="binary_crossentropy"
         )
 
-        # When combined with generator disable training
-
         self._discriminator.trainable = False
-
-        # Set DCGAN Model
 
         dcgan_input_1 = Input(shape=(latent_dim,))
         dcgan_input_2 = Input(shape=(condition_dim,))
         dcgan_output = self._discriminator(
             self._generator([dcgan_input_1, dcgan_input_2])
         )
+
         self._dcgan = Model([dcgan_input_1, dcgan_input_2], dcgan_output)
-
-        # Compile DCGAN
-
         dcgan_optimizer = keras.optimizers.Adam(lr=0.0004, decay=1e-8)
         self._dcgan.compile(optimizer=dcgan_optimizer, loss="binary_crossentropy")
 
@@ -164,9 +147,6 @@ class ConditionalDCGAN(object):
         self._dcgan.save_weights(file_path, overwrite)
 
 
-# Main Program
-
-
 def normalize(X):
     return (X - 127.5) / 127.5
 
@@ -175,14 +155,13 @@ def denormalize(X):
     return (X + 1.0) * 127.5
 
 
-def train(latent_dim, height, width, RGB, num_class, path):
+def train(latent_dim, height, width, RGB, num_class, epochs, path):
 
     (X_Train, Y_Train), (_, _) = keras.datasets.mnist.load_data()
     Y_Train = to_categorical(Y_Train, num_class)[0:10000]
     X_Train = X_Train[:, :, :, None].astype("float32")
     X_Train = normalize(X_Train)[0:10000]
 
-    epochs = 25
     batch_size = 64
     iterations = X_Train.shape[0] // batch_size
 
@@ -225,7 +204,7 @@ def train(latent_dim, height, width, RGB, num_class, path):
                 plt.plot(_d_loss, label="Discriminator Loss")
                 plt.plot(_g_loss, label="Generator Loss")
                 plt.legend()
-                plt.savefig(os.path.join(path, "Loss_Graph_Final.png"))
+                plt.savefig(os.path.join(path, "loss_graph_final.png"))
                 plt.close()
 
         if (i + 1) % 1 == 0:
@@ -242,7 +221,7 @@ def train(latent_dim, height, width, RGB, num_class, path):
             condition = np.argmax(conditions[c])
             img.save(
                 os.path.join(
-                    path, "gen_during" + str(i + 1) + "_" + str(condition) + ".png"
+                    path, "gen_during_" + str(i + 1) + "_" + str(condition) + ".png"
                 )
             )
 
@@ -250,27 +229,32 @@ def train(latent_dim, height, width, RGB, num_class, path):
         print()
 
 
-def predict(latent_dim, height, width, RGB, num_class, path):
+def predict(latent_dim, height, width, RGB, num_class, epochs, path):
 
     dcgan = ConditionalDCGAN(latent_dim, height, width, RGB, num_class)
-    dcgan.load_weights(os.path.join(path, "gan_epoch_25.h5"))
+    dcgan.load_weights(os.path.join(path, "gan_epoch_" + epochs + ".h5"))
     for num in range(num_class):
-        for i in range(10):
+        for _ in range(10):
             random_latent_vectors = np.random.normal(size=(1, latent_dim))
             conditions = np.zeros((1, num_class), dtype=np.float32)
             conditions[0, num] = 1
             generated_images = dcgan.predict(random_latent_vectors, conditions)
             img = image.array_to_img(denormalize(generated_images[0]), scale=False)
-            img.save(os.path.join(path, "gen_after" + "_" + str(num) + ".png"))
+            img.save(os.path.join(path, "gen_after_" + str(num) + ".png"))
 
 
 if __name__ == "__main__":
 
-    path = "..."
+    if (len(sys.argv) != 3):
+        raise ValueError("Wrong number of arguments supplied.")
+    path = str(sys.argv[1])
+    epochs = int(sys.argv[2])
+
     latent_dim = 100
     height = 28
     width = 28
     RGB = 1
     num_class = 10
-    train(latent_dim, height, width, RGB, num_class, path)
-    predict(latent_dim, height, width, RGB, num_class, path)
+
+    train(latent_dim, height, width, RGB, num_class, epochs, path)
+    predict(latent_dim, height, width, RGB, num_class, epochs, path)

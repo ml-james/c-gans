@@ -1,8 +1,21 @@
-### Plan / Questions / Ideas
+#### cGANs
 
-* Tidy up the scripts ..?
-* Can the scripts be run in such a way that the outputs are presented during training nicely to the user?
-* Can the user be given time to completion stats etc. on training. 
-* Could the training be done somewhere non-local, e.g. AWS?
-* It might be nice if somebody could come along and just take the trained model..?
-* Could this project be presented and packaged up to the user somehow... kind of something like a jupyter notebook.
+##### Introduction 
+
+This repository is a direct result of my Masters Physics research project at *The University of Cambridge* entitled: **Fast Simulation of Particle Physics Detectors Using Machine Learning Tools**. Herein lies the final report, and the code used to generate the containing plots. I shall defer to the `pdf` to explain the motivation, the aims of the study and the results. 
+
+##### Running the scripts
+
+In order to set-up the environment to run the scripts in this project, please execute the following commands. You will need to run these commands in the root directory of this repository as they will require the `Pipfile` and `Pipfile.lock` files:
+ 
+ 1) `python -m pip install --upgrade pip`
+ 2) `pip install pipenv`
+ 3) `pipenv install`
+
+To run `c-dcgan.py` please type the following into your terminal: `pipenv run python c-dcgan.py <path-to-results-directory> <number-of-epochs>`
+
+##### What's up next?
+
+* Tidy up the remaining scripts.
+* Commit the .h5 files of the trained models for usability.
+* Train the models in AWS..?
