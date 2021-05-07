@@ -14,8 +14,8 @@ In order to set-up the environment to run the scripts in this project, please ex
 
 To run `c-dcgan.py` please type the following into your terminal: `pipenv run python c-dcgan.py <path-to-results-directory> <number-of-epochs>`
 
-##### What's up next?
+#### What's up next?
 
 * Tidy up the remaining scripts.
-* Commit the .h5 files of the trained models for usability.
-* Train the models in AWS..?
+* Commit the .h5 files of the trained models for re-usability.
+* Train the models in AWS...?
