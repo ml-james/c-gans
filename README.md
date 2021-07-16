@@ -2,7 +2,7 @@
 
 #### Introduction 
 
-This repository is a direct result of my Masters Physics research project at the *University of Cambridge* entitled: **Fast Simulation of Particle Physics Detectors Using Machine Learning Tools**. Herein lies the final report, and the code used to generate the containing plots. I shall defer to the `.pdf` to explain the motivation, the aims of the study and the results. 
+This repository is a direct result of my Masters Physics research project at the *University of Cambridge* entitled: **Fast Simulation of Particle Physics Detectors using Machine Learning Tools**. Herein lies the final report, and the code used to generate the containing plots. I shall defer to the `.pdf` to explain the motivation, the aims of the study and the results. 
 
 #### Running the scripts
 

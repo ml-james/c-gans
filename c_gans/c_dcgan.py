@@ -20,7 +20,7 @@ from keras.utils.np_utils import to_categorical
 
 
 class Generator:
-    def __init__(self, latent_dim, condition_dim, RGB):
+    def __init__(self, latent_dim: int, condition_dim: int, rgb: int):
 
         generator_input_1 = Input(shape=(latent_dim,), name="g_1")
         generator_input_2 = Input(shape=(condition_dim,), name="g_2")
@@ -35,7 +35,7 @@ class Generator:
         x = Conv2D(64, 5, padding="same")(x)
         x = Activation("tanh")(x)
         x = UpSampling2D(size=(2, 2))(x)
-        x = Conv2D(RGB, 5, padding="same")(x)
+        x = Conv2D(rgb, 5, padding="same")(x)
         x = Activation("tanh")(x)
 
         self.generator = Model(
@@ -48,13 +48,13 @@ class Generator:
 
 
 class Discriminator:
-    def __init__(self, height, width, RGB, condition_dim):
+    def __init__(self, height: int, width: int, rgb: int, condition_dim: int):
 
         discriminator_input_1 = Input(
             shape=(
                 height,
                 width,
-                RGB,
+                rgb,
             ),
             name="d_1",
         )
@@ -229,9 +229,9 @@ def train(latent_dim, height, width, RGB, num_class, epochs, path):
         print()
 
 
-def predict(latent_dim, height, width, RGB, num_class, epochs, path):
+def predict(latent_dim: int, height: int, width: int, rgb, num_class: int, epochs: str, path: str):
 
-    dcgan = ConditionalDCGAN(latent_dim, height, width, RGB, num_class)
+    dcgan = ConditionalDCGAN(latent_dim, height, width, rgb, num_class)
     dcgan.load_weights(os.path.join(path, "gan_epoch_" + epochs + ".h5"))
     for num in range(num_class):
         for _ in range(10):
