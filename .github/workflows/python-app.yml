@@ -13,4 +13,4 @@ jobs:
     - name: Build Docker Image
       run: docker build -t c-gans .
     - name: Lint with flake8 & Tests
-      run: docker run --rm --entrypoint ./run_flake8_and_tests c-gans
+      run: docker run --rm --entrypoint ./run_flake8_and_tests.sh c-gans
