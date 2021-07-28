@@ -12,5 +12,5 @@ jobs:
       uses: actions/checkout@v2
     - name: Build Docker Image
       run: docker build -t c-gans .
-    - name: Lint With flake8 & Tests
-      run: docker run --rm --entrypoint ./run_flake_and_tests c-gans
+    - name: Lint with flake8 & Tests
+      run: docker run --rm --entrypoint ./run_flake8_and_tests c-gans
