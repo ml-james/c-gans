@@ -1,36 +1,23 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
-
-name: Python application
-
+name: c-gans
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: Install dependencies
+    - name: Checkout Code
+      uses: actions/checkout@v2
+    - name: Build Docker Image
+      run: docker build -t c-gans .
+    - name: Run Docker Container
+      run: docker run --rm -it --entrypoint bash c-gans
+    - name: Lint With flake8
       run: |
-        python -m pip install --upgrade pip
-        pip install pipenv
-        if [ -f Pipfile.lock ]; then pipenv install --ignore-pipfile; fi
-        pipenv install pytest --dev
-        pipenv install flake8 --dev
-    - name: Lint with flake8
-      run: |
-        pipenv run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        pipenv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Tests
-      run: |
-        pipenv run python -m unittest tests/*test*
+        pip install flake8 -- dev
+        flake8 . --count -- --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Run Tests
+      run: python3 -m unittest tests/*test*

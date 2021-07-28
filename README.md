@@ -6,13 +6,12 @@ This repository is a direct result of my Masters Physics research project at the
 
 #### Running the scripts
 
-In order to set-up the environment to run the scripts in this project, please execute the following commands. You will need to run these commands in the root directory of this repository as they will require the `Pipfile` and `Pipfile.lock` files:
+In order to set-up the environment to run the scripts in this project, please download `docker`. Then from the `root` of this repository run the following commands.
  
- 1) `python -m pip install --upgrade pip`
- 2) `pip install pipenv`
- 3) `pipenv install`
+ 1) `docker build -t c-gans .`
+ 2) `docker run --rm -it --entrypoint bash c-gans`
 
-To run `c-dcgan.py` please type the following into your terminal: `pipenv run python c-dcgan.py <path-to-results-directory> <number-of-epochs-to-train>`
+Now running interactively within the docker container you can run the scripts, for example, to run `c-dcgan.py` please type the following into your terminal: `python3 c_gans/c-dcgan.py <path-to-results-directory> <number-of-epochs-to-train>`
 
 #### What's up next?
 
