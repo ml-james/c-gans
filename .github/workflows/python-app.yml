@@ -12,12 +12,5 @@ jobs:
       uses: actions/checkout@v2
     - name: Build Docker Image
       run: docker build -t c-gans .
-    - name: Run Docker Container
-      run: docker run --rm --entrypoint bash c-gans
-    - name: Lint With flake8
-      run: |
-        pip install flake8
-        flake8 . --count -- --select=E9,F63,F7,F82 --show-source --statistics
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Run Tests
-      run: python3 -m unittest tests/*test*
+    - name: Lint With flake8 & Tests
+      run: docker run --rm --entrypoint ./run_flake_and_tests c-gans
