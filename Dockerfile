@@ -1,5 +1,6 @@
 FROM ubuntu:latest
 RUN mkdir /app
+VOLUME /out
 ADD . /app
 WORKDIR /app
 RUN apt-get update && apt-get install -y python3-pip python3-dev
