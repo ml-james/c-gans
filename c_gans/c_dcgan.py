@@ -229,7 +229,15 @@ def train(latent_dim, height, width, RGB, num_class, epochs, path):
         print()
 
 
-def predict(latent_dim: int, height: int, width: int, rgb, num_class: int, epochs: str, path: str):
+def predict(
+    latent_dim: int,
+    height: int,
+    width: int,
+    rgb,
+    num_class: int,
+    epochs: str,
+    path: str,
+):
 
     dcgan = ConditionalDCGAN(latent_dim, height, width, rgb, num_class)
     dcgan.load_weights(os.path.join(path, "gan_epoch_" + epochs + ".h5"))
@@ -245,7 +253,7 @@ def predict(latent_dim: int, height: int, width: int, rgb, num_class: int, epoch
 
 if __name__ == "__main__":
 
-    if (len(sys.argv) != 3):
+    if len(sys.argv) != 3:
         raise ValueError("Wrong number of arguments supplied.")
     path = str(sys.argv[1])
     epochs = int(sys.argv[2])
