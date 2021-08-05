@@ -13,7 +13,7 @@ jobs:
     - name: Build Docker Image
       run: docker build -t c-gans .
     - name: Run Tests
-      run: docker run --rm c-gans "-m unittest tests/*test*"
+      run: docker run --rm --entrypoint ./run_tests.sh c-gans
     - name: Run Black
       uses: lgeiger/black-action@v1.0.1
       with:
