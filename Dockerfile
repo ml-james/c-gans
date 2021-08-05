@@ -9,4 +9,4 @@ RUN pip3 --no-cache-dir install --upgrade pip
 RUN chmod +x *.sh
 RUN pip3 install -r requirements.txt
 
-ENTRYPOINT["python3"]
+ENTRYPOINT ["python"]
