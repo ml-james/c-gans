@@ -11,9 +11,3 @@ In order to set-up the environment and run the scripts in this project, please d
  1) `docker build -t c-gans .`
  2) `docker run --rm -it -v <output-directory-host-machine>:/out --entrypoint bash c-gans`
  3) `python3 c_gans/<python-script-to-run> /out <number-of-epochs-to-train>`
- 
-#### What's up next?
-
-* Tidy up the remaining scripts.
-* Commit the `.h5` files of the trained models for re-usability.
-* Train the models with AWS?
