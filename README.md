@@ -10,7 +10,7 @@ and the results.
 #### Running the scripts
 
 The scripts should be run within a docker container as I found this the only way to ensure this project could be
-platform-agnostic with respect to dependencies. From the root of this repository please run the following commands.
+platform-agnostic with respect to dependencies. From the root of this repository please run the following commands:
 
 1) `docker build -t c-gans .`
 2) `docker run --rm -it -v <output-directory-host-machine>:/out --entrypoint bash c-gans`
